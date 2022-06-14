@@ -1,0 +1,38 @@
+{
+	"name": "NSFWTag",
+	"author": "Fumple",
+	"url": "https://github.com/fumple/MediaWiki-NSFWTag",
+	"description": "This extension adds an `<nsfw>` and `<sfw>` tag along with {{#nsfw}}, along with an user option to toggle between the two",
+	"version": "git",
+	"license-name": "GPL-3.0-only",
+	"type": "parserhook",
+
+    "AutoloadClasses": {
+        "MediaWiki\\Extension\\NSFWTag\\Extension": "src/Extension.php"
+    },
+	"ExtensionMessagesFiles": {
+		"NSFWTagMagic": "NSFWTag.i18n.php"
+	},
+    "HookHandlers": {
+	    "NSFWTag": {
+            "class": "MediaWiki\\Extension\\NSFWTag\\Extension",
+            "services": [
+                "UserOptionsManager"
+            ]
+	    }
+    },
+	"Hooks": {
+        "BeforePageDisplay": "NSFWTag",
+		"GetPreferences": "NSFWTag",
+        "OutputPageParserOutput": "NSFWTag",
+        "ParserFirstCallInit": "NSFWTag",
+        "ParserOptionsRegister": "NSFWTag"
+	},
+	"MessagesDirs": {
+		"NSFWTag": [
+			"i18n"
+		]
+	},
+
+	"manifest_version": 2
+}
