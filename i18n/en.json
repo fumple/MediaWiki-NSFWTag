@@ -1,5 +1,9 @@
 {
     "nsfwtag-pref": "Show NSFW content",
+    "nsfwtag-prefeditor": "Show NSFW toggle when editing a page",
+
     "nsfwtag-header": "",
-    "nsfwtag-footer": ""
+    "nsfwtag-footer": "",
+
+    "nsfwtag-shownsfw-label": "Show NSFW tags in preview"
 }

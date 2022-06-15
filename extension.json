@@ -23,6 +23,7 @@
     },
 	"Hooks": {
         "BeforePageDisplay": "NSFWTag",
+		"EditPageGetCheckboxesDefinition": "NSFWTag",
 		"GetPreferences": "NSFWTag",
         "OutputPageParserOutput": "NSFWTag",
         "ParserFirstCallInit": "NSFWTag",

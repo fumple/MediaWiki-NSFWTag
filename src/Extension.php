@@ -4,11 +4,13 @@ namespace MediaWiki\Extension\NSFWTag;
 use MediaWiki\User\UserOptionsManager;
 use Parser;
 use PPFrame;
+use RequestContext;
 use User;
 
 class Extension implements
 	\MediaWiki\Preferences\Hook\GetPreferencesHook, 
 	\MediaWiki\Hook\BeforePageDisplayHook,
+	\MediaWiki\Hook\EditPageGetCheckboxesDefinitionHook,
 	\MediaWiki\Hook\OutputPageParserOutputHook,
 	\MediaWiki\Hook\ParserFirstCallInitHook, 
 	\MediaWiki\Hook\ParserOptionsRegisterHook
@@ -30,6 +32,11 @@ class Extension implements
 			'label-message' => 'nsfwtag-pref',
 			'section' => 'rendering',
 		];
+		$preferences['nsfwtag-prefeditor'] = [
+			'type' => 'toggle',
+			'label-message' => 'nsfwtag-prefeditor',
+			'section' => 'editing/editor',
+		];
 	}
 
 	private function getNSFWPreference( Parser $parser ) {
@@ -38,8 +45,15 @@ class Extension implements
 
 		// If not set
 		if($parserOption == '') {
+			$NSFWTogglePreference = $this->userOptionsManager->getBoolOption( $parser->getUserIdentity(), 'nsfwtag-prefeditor' );
 			// load preference and save as 1/0
-			$preference = $this->userOptionsManager->getBoolOption( $parser->getUserIdentity(), 'nsfwtag-pref' );
+			if($_POST['mode'] == 'preview' && $NSFWTogglePreference) {
+				$preference = isset($_POST['shownsfw']);
+			} else if(isset($_GET['shownsfw'])) {
+				$preference = $_GET['shownsfw'] == '1';
+			} else {
+				$preference = $this->userOptionsManager->getBoolOption( $parser->getUserIdentity(), 'nsfwtag-pref' );
+			}
 			$parser->getOptions()->setOption( 'extnsfwtag', $preference ? '1' : '0' );
 			$parser->getOutput()->setExtensionData( 'extnsfwtag', $preference ? '1' : '0' );
 			return $preference;
@@ -115,6 +129,17 @@ class Extension implements
 		if($out->getProperty( 'extnsfwtag-used' )) {
 			$out->prependHtml( wfMessage('nsfwtag-header')->plain() );
 			$out->addWikiMsg( 'nsfwtag-footer' );
+		}
+	}
+
+	public function onEditPageGetCheckboxesDefinition( $editPage, &$checkboxes ) {
+		if($this->userOptionsManager->getBoolOption( RequestContext::getMain()->getUser(), 'nsfwtag-prefeditor')) {
+			$checkboxes['shownsfw'] = [
+				'id' => 'wpNSFWTagShow',
+				'default' => isset($_POST['shownsfw']),
+				'label-message' => 'nsfwtag-shownsfw-label',
+				'title-message' => 'nsfwtag-shownsfw-title'
+			];
 		}
 	}
 }
