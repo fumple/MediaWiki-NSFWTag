@@ -47,7 +47,7 @@ class Extension implements
 		if($parserOption == '') {
 			$NSFWTogglePreference = $this->userOptionsManager->getBoolOption( $parser->getUserIdentity(), 'nsfwtag-prefeditor' );
 			// load preference and save as 1/0
-			if($_POST['mode'] == 'preview' && $NSFWTogglePreference) {
+			if(isset($_POST['mode']) && $_POST['mode'] == 'preview' && $NSFWTogglePreference) {
 				$preference = isset($_POST['shownsfw']);
 			} else if(isset($_GET['shownsfw'])) {
 				$preference = $_GET['shownsfw'] == '1';
