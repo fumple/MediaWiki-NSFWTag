@@ -8,7 +8,7 @@ This extension adds parser tags and a function, to hide NSFW content from users.
 - Wraps SFW and NSFW content with a span.sfw or span.nsfw respectively
 ## Usage
 - `<sfw>text</sfw>` for SFW content, everything between the tags will be shown to users with the `Show NSFW content` setting disabled.
-- `<nsfw>text</nsfw>` for NSFW content, everything between the tags will be shown to users with the `Show NSFW content` setting disabled.
+- `<nsfw>text</nsfw>` for NSFW content, everything between the tags will be shown to users with the `Show NSFW content` setting enabled.
 - `{{#nsfw: nsfw text | sfw text}}` is the two above tags combined into one, should be self-explanatory
 - `MediaWiki:nsfwtag-header` and `MediaWiki:nsfwtag-footer` will be shown on pages which use the tags / functions above the page content and below the page content respectively
 ## Configuration
