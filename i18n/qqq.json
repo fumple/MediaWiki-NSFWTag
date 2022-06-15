@@ -1,5 +1,10 @@
 {
-    "nsfwtag-pref": "Label for setting in Special:Preferences",
+    "nsfwtag-pref": "Label for NSFW preference in Special:Preferences",
+    "nsfwtag-prefeditor": "Label for a preference that adds a Show NSFW tags toggle when previewing a page",
+
     "nsfwtag-header": "Message inserted above content when it contains a nsfw tag/function or sfw tag",
-    "nsfwtag-footer": "Message inserted below content when it contains a nsfw tag/function or sfw tag"
+    "nsfwtag-footer": "Message inserted below content when it contains a nsfw tag/function or sfw tag",
+
+    "nsfwtag-shownsfw-label": "Label of a checkbox to toggle NSFW tags when previewing a page",
+    "nsfwtag-shownsfw-title": "Title of a checkbox to toggle NSFW tags when previewing a page"
 }

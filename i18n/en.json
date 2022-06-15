@@ -5,5 +5,6 @@
     "nsfwtag-header": "",
     "nsfwtag-footer": "",
 
-    "nsfwtag-shownsfw-label": "Show NSFW tags in preview"
+    "nsfwtag-shownsfw-label": "Show NSFW tags in preview",
+    "nsfwtag-shownsfw-title": "Show NSFW tags in preview"
 }
