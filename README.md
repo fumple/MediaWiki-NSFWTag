@@ -4,7 +4,9 @@ This extension adds parser tags and a function, to hide NSFW content from users.
 ## Features
 - Adds two parser tags: `<sfw></sfw>` and `<nsfw></nsfw>`
 - Adds a parser function: `{{#nsfw: nsfw text | sfw text}}`
-- Adds a setting: `Show NSFW content` under `Appearance`
+- Adds 2 settings: `Show NSFW content` under `Appearance` and `Show NSFW toggle when editing a page` under `Editing`
+- Adds a new toggle when editing a page, that can be used to toggle NSFW tags when previewing without going to preferences
+- Adds a query param: `?shownsfw=1` that can be used to force on/off NSFW tags 
 - Wraps SFW and NSFW content with a span.sfw or span.nsfw respectively
 ## Usage
 - `<sfw>text</sfw>` for SFW content, everything between the tags will be shown to users with the `Show NSFW content` setting disabled.
