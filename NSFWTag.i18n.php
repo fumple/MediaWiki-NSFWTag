@@ -1,8 +1,9 @@
 <?php
+global $wgNSFWTagNSFWFunctionName;
 $magicWords = [];
 
 /** English
  */
 $magicWords['en'] = [
-   'nsfw' => [ 0, 'nsfw' ],
+   $wgNSFWTagNSFWFunctionName => [ 0, $wgNSFWTagNSFWFunctionName ],
 ];

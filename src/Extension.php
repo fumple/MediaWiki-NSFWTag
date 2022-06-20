@@ -40,6 +40,8 @@ class Extension implements
 	}
 
 	private function getNSFWPreference( Parser $parser ) {
+		global $wgNSFWTagQueryParameterName;
+
 		// Check whether the extnsfwtag option was already set
 		$parserOption = $parser->getOptions()->getOption( 'extnsfwtag' );
 
@@ -49,8 +51,8 @@ class Extension implements
 			// load preference and save as 1/0
 			if(isset($_POST['mode']) && $_POST['mode'] == 'preview' && $NSFWTogglePreference) {
 				$preference = isset($_POST['shownsfw']);
-			} else if(isset($_GET['shownsfw'])) {
-				$preference = $_GET['shownsfw'] == '1';
+			} else if(isset($_GET[$wgNSFWTagQueryParameterName])) {
+				$preference = $_GET[$wgNSFWTagQueryParameterName] == '1';
 			} else {
 				$preference = $this->userOptionsManager->getBoolOption( $parser->getUserIdentity(), 'nsfwtag-pref' );
 			}
@@ -65,9 +67,10 @@ class Extension implements
 
 	// Register the tags and function
 	public function onParserFirstCallInit( $parser ) {
-		$parser->setFunctionHook( 'nsfw',  [ $this, 'renderFunction'  ] );
-		$parser->setHook( 'nsfw', [ $this, 'renderTagNSFW' ] );
-		$parser->setHook( 'sfw',  [ $this, 'renderTagSFW'  ] );
+		global $wgNSFWTagNSFWFunctionName, $wgNSFWTagNSFWTagName, $wgNSFWTagSFWTagName;
+		$parser->setFunctionHook( $wgNSFWTagNSFWFunctionName,  [ $this, 'renderFunction'  ] );
+		$parser->setHook( $wgNSFWTagNSFWTagName, [ $this, 'renderTagNSFW' ] );
+		$parser->setHook( $wgNSFWTagSFWTagName,  [ $this, 'renderTagSFW'  ] );
 	}
 
 	// Render <nsfw>
@@ -89,7 +92,7 @@ class Extension implements
 		// Check if NSFW is enabled, and compare it to $isNSFWTag
 		if($preference == $isNSFWTag) {
 			// Return the input provided, but wrap it in a <span> with a class to allow the wiki to style the content
-			$class = $isNSFWTag ? 'nsfw' : 'sfw';
+			$class = $isNSFWTag ? 'nsfwtag' : 'sfwtag';
 			// Parse the input for wikitext before outputing it
 			$parsedInput = $parser->recursiveTagParse( $input, $frame );
 			return "<span class=\"$class\">".$parsedInput."</span>";
@@ -106,7 +109,7 @@ class Extension implements
 		$preference = $this->getNSFWPreference( $parser );
 
 		// Return the input provided, but wrap it in a <span> with a class to allow the wiki to style the content
-		$class = $preference ? 'nsfw' : 'sfw';
+		$class = $preference ? 'nsfwtag' : 'sfwtag';
 		// Parse the input for wikitext before outputing it
 		$parsedInput = $parser->recursiveTagParse( $preference ? $nsfwText : $sfwText );
 		return "<span class=\"$class\">".$parsedInput."</span>";

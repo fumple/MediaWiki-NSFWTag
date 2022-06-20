@@ -10,6 +10,24 @@
     "AutoloadClasses": {
         "MediaWiki\\Extension\\NSFWTag\\Extension": "src/Extension.php"
     },
+	"config": {
+		"NSFWTagNSFWTagName": {
+			"value": "nsfw",
+			"description": "Name of the <nsfw> tag"
+		},
+		"NSFWTagSFWTagName": {
+			"value": "sfw",
+			"description": "Name of the <sfw> tag"
+		},
+		"NSFWTagNSFWFunctionName": {
+			"value": "nsfw",
+			"description": "Name of the {{#nsfw}} function"
+		},
+		"NSFWTagQueryParameterName": {
+			"value": "shownsfw",
+			"description": "Name of the ?shownsfw=1 query parameter"
+		}
+	},
 	"ExtensionMessagesFiles": {
 		"NSFWTagMagic": "NSFWTag.i18n.php"
 	},
