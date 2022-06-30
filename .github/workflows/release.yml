@@ -24,6 +24,7 @@ jobs:
       - name: Run a multi-line script
         id: pack
         run: |
+          sed -i 's/: "git",/: "'${GITHUB_REF:10}'",/' extension.json
           cd $GITHUB_WORKSPACE/..
           tar -cvzf NSFWTag-${GITHUB_REF:10}.tar.gz --exclude='.git*' $(basename $GITHUB_WORKSPACE)
           echo "::set-output name=file::$PWD/NSFWTag-${GITHUB_REF:10}.tar.gz"
