@@ -1,4 +1,11 @@
 {
+	"@metadata": {
+		"authors": [
+			"Fumple"
+		]
+	},
+    "nsfwtag-desc": "Extension description",
+
     "nsfwtag-pref": "Label for NSFW preference in Special:Preferences",
     "nsfwtag-prefeditor": "Label for a preference that adds a Show NSFW tags toggle when previewing a page",
 

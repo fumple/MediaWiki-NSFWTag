@@ -40,8 +40,6 @@ class Extension implements
 	}
 
 	private function getNSFWPreference( Parser $parser ) {
-		global $wgNSFWTagQueryParameterName;
-
 		// Check whether the extnsfwtag option was already set
 		$parserOption = $parser->getOptions()->getOption( 'extnsfwtag' );
 
@@ -51,12 +49,12 @@ class Extension implements
 			// load preference and save as 1/0
 			if(isset($_POST['mode']) && $_POST['mode'] == 'preview' && $NSFWTogglePreference) {
 				$preference = isset($_POST['shownsfw']);
-			} else if(isset($_GET[$wgNSFWTagQueryParameterName])) {
-				$preference = $_GET[$wgNSFWTagQueryParameterName] == '1';
+			} else if(isset( $_GET['shownsfw'] )) {
+				$preference = $_GET['shownsfw'] == '1';
 			} else {
 				$preference = $this->userOptionsManager->getBoolOption( $parser->getUserIdentity(), 'nsfwtag-pref' );
 			}
-			$parser->getOptions()->setOption( 'extnsfwtag', $preference ? '1' : '0' );
+			$parser->getOptions()->setOption( 		'extnsfwtag', $preference ? '1' : '0' );
 			$parser->getOutput()->setExtensionData( 'extnsfwtag', $preference ? '1' : '0' );
 			return $preference;
 		} else {
@@ -67,10 +65,9 @@ class Extension implements
 
 	// Register the tags and function
 	public function onParserFirstCallInit( $parser ) {
-		global $wgNSFWTagNSFWFunctionName, $wgNSFWTagNSFWTagName, $wgNSFWTagSFWTagName;
-		$parser->setFunctionHook( $wgNSFWTagNSFWFunctionName,  [ $this, 'renderFunction'  ] );
-		$parser->setHook( $wgNSFWTagNSFWTagName, [ $this, 'renderTagNSFW' ] );
-		$parser->setHook( $wgNSFWTagSFWTagName,  [ $this, 'renderTagSFW'  ] );
+		$parser->setFunctionHook( 'nsfw',  [ $this, 'renderFunction'  ] );
+		$parser->setHook( 'nsfw', [ $this, 'renderTagNSFW' ] );
+		$parser->setHook( 'sfw',  [ $this, 'renderTagSFW'  ] );
 	}
 
 	// Render <nsfw>
@@ -139,7 +136,7 @@ class Extension implements
 		if($this->userOptionsManager->getBoolOption( RequestContext::getMain()->getUser(), 'nsfwtag-prefeditor')) {
 			$checkboxes['shownsfw'] = [
 				'id' => 'wpNSFWTagShow',
-				'default' => isset($_POST['shownsfw']),
+				'default' => isset( $_POST['shownsfw'] ),
 				'label-message' => 'nsfwtag-shownsfw-label',
 				'title-message' => 'nsfwtag-shownsfw-title'
 			];

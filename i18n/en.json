@@ -1,4 +1,11 @@
 {
+	"@metadata": {
+		"authors": [
+			"Fumple"
+		]
+	},
+    "nsfwtag-desc": "This extension adds an `<nsfw>` and `<sfw>` tag along with {{#nsfw}}, along with an user option to toggle between the two",
+
     "nsfwtag-pref": "Show NSFW content",
     "nsfwtag-prefeditor": "Show NSFW toggle when editing a page",
 
