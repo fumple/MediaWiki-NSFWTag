@@ -7,27 +7,27 @@
 	"license-name": "GPL-3.0-only",
 	"type": "parserhook",
 
-    "AutoloadClasses": {
-        "MediaWiki\\Extension\\NSFWTag\\Hooks": "src/NSFWTagHooks.php"
-    },
+	"AutoloadClasses": {
+		"MediaWiki\\Extension\\NSFWTag\\Hooks": "src/NSFWTagHooks.php"
+	},
 	"ExtensionMessagesFiles": {
 		"NSFWTagMagic": "NSFWTag.i18n.php"
 	},
-    "HookHandlers": {
-	    "NSFWTagHooks": {
-            "class": "MediaWiki\\Extension\\NSFWTag\\Hooks",
-            "services": [
-                "UserOptionsManager"
-            ]
-	    }
-    },
+	"HookHandlers": {
+		"NSFWTagHooks": {
+			"class": "MediaWiki\\Extension\\NSFWTag\\Hooks",
+			"services": [
+				"UserOptionsManager"
+			]
+		}
+	},
 	"Hooks": {
-        "BeforePageDisplay": "NSFWTagHooks",
+		"BeforePageDisplay": "NSFWTagHooks",
 		"EditPageGetCheckboxesDefinition": "NSFWTagHooks",
 		"GetPreferences": "NSFWTagHooks",
-        "OutputPageParserOutput": "NSFWTagHooks",
-        "ParserFirstCallInit": "NSFWTagHooks",
-        "ParserOptionsRegister": "NSFWTagHooks"
+		"OutputPageParserOutput": "NSFWTagHooks",
+		"ParserFirstCallInit": "NSFWTagHooks",
+		"ParserOptionsRegister": "NSFWTagHooks"
 	},
 	"MessagesDirs": {
 		"NSFWTag": [
