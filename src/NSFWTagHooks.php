@@ -7,7 +7,7 @@ use PPFrame;
 use RequestContext;
 use User;
 
-class Extension implements
+class Hooks implements
 	\MediaWiki\Preferences\Hook\GetPreferencesHook, 
 	\MediaWiki\Hook\BeforePageDisplayHook,
 	\MediaWiki\Hook\EditPageGetCheckboxesDefinitionHook,
@@ -45,15 +45,21 @@ class Extension implements
 
 		// If not set
 		if($parserOption == '') {
+			// Couldn't find a way to get a context from the arguments provided
+			$request = RequestContext::getMain()->getRequest();
+
+			// Check whether the user enabled the checkbox in the editor
 			$NSFWTogglePreference = $this->userOptionsManager->getBoolOption( $parser->getUserIdentity(), 'nsfwtag-prefeditor' );
-			// load preference and save as 1/0
-			if(isset( $_POST['mode'] ) && $_POST['mode'] == 'preview' && $NSFWTogglePreference) {
-				$preference = isset($_POST['shownsfw']);
-			} else if(isset( $_GET['shownsfw'] )) {
-				$preference = $_GET['shownsfw'] == '1';
+
+			// load NSFW preference and save as 1/0
+			if($parser->getOptions()->getIsPreview() && $NSFWTogglePreference) {
+				$preference = $request->getCheck('shownsfwcheckbox');
+			} else if($request->getCheck('shownsfw')) {
+				$preference = $request->getBool('shownsfw');
 			} else {
 				$preference = $this->userOptionsManager->getBoolOption( $parser->getUserIdentity(), 'nsfwtag-pref' );
 			}
+
 			$parser->getOptions()->setOption( 		'extnsfwtag', $preference ? '1' : '0' );
 			$parser->getOutput()->setExtensionData( 'extnsfwtag', $preference ? '1' : '0' );
 			return $preference;
@@ -127,16 +133,17 @@ class Extension implements
 	public function onBeforePageDisplay( $out, $skin ): void {
 		// if used an nsfw or sfw tag, add header and footer
 		if($out->getProperty( 'extnsfwtag-used' )) {
-			$out->prependHtml( wfMessage('nsfwtag-header')->plain() );
+			$out->prependHtml( wfMessage( 'nsfwtag-header' )->plain() );
 			$out->addWikiMsg( 'nsfwtag-footer' );
 		}
 	}
 
 	public function onEditPageGetCheckboxesDefinition( $editPage, &$checkboxes ) {
-		if($this->userOptionsManager->getBoolOption( RequestContext::getMain()->getUser(), 'nsfwtag-prefeditor')) {
-			$checkboxes['shownsfw'] = [
+		$context = $editPage->getContext();
+		if($this->userOptionsManager->getBoolOption( $context->getUser(), 'nsfwtag-prefeditor' )) {
+			$checkboxes['shownsfwcheckbox'] = [
 				'id' => 'wpNSFWTagShow',
-				'default' => isset( $_POST['shownsfw'] ),
+				'default' => $context->getRequest()->getCheck( 'shownsfwcheckbox' ),
 				'label-message' => 'nsfwtag-shownsfw-label',
 				'title-message' => 'nsfwtag-shownsfw-title'
 			];
