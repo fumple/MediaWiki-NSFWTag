@@ -1,0 +1,5 @@
+{
+    "require-dev": {
+        "mediawiki/mediawiki-phan-config": "^0.11.1"
+    }
+}
