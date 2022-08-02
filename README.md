@@ -18,5 +18,5 @@ This extension adds parser tags and a function, to hide NSFW (or really any) con
 - Put it in the extensions folder
 - Add `wfLoadExtension("NSFWTag");` to `LocalSettings.php`
 ## Tested versions
-Using phan: 1.35.6, 1.35.7, 1.37.3, 1.38.2
-By me: 1.35.6 and 1.38.1
+- Using phan: 1.35.6, 1.35.7, 1.37.3, 1.38.2
+- By me: 1.35.6 and 1.38.1
