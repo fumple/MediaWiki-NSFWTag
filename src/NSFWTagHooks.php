@@ -10,10 +10,11 @@
 namespace MediaWiki\Extension\NSFWTag;
 
 use MediaWiki\User\UserOptionsManager;
-use Parser;
-use PPFrame;
-use RequestContext;
-use User;
+use \EditPage;
+use \Parser;
+use \PPFrame;
+use \RequestContext;
+use \User;
 
 class Hooks implements
     \MediaWiki\Preferences\Hook\GetPreferencesHook, 
@@ -75,9 +76,10 @@ class Hooks implements
         if ($parserOption == '') {
             // Couldn't find a way to get a context from the arguments provided
             $request = RequestContext::getMain()->getRequest();
+            $user = Util::getUserFromParser($parser);
 
             // Check whether the user enabled the checkbox in the editor
-            $NSFWTogglePreference = $this->_userOptionsManager->getBoolOption($parser->getUserIdentity(), 'nsfwtag-prefeditor');
+            $NSFWTogglePreference = $this->_userOptionsManager->getBoolOption($user, 'nsfwtag-prefeditor');
 
             // load NSFW preference and save as 1/0
             if ($parser->getOptions()->getIsPreview() && $NSFWTogglePreference) {
@@ -85,7 +87,7 @@ class Hooks implements
             } else if ($request->getCheck('shownsfw')) {
                 $preference = $request->getBool('shownsfw');
             } else {
-                $preference = $this->_userOptionsManager->getBoolOption($parser->getUserIdentity(), 'nsfwtag-pref');
+                $preference = $this->_userOptionsManager->getBoolOption($user, 'nsfwtag-pref');
             }
 
             $parser->getOptions()->setOption('extnsfwtag', $preference ? '1' : '0');
@@ -197,8 +199,8 @@ class Hooks implements
      * 
      * Pass the extnsfwtag option to OutputPage as extnsfwtag-used if it's not null
      * 
-     * @param OutputPage   $out
-     * @param ParserOutput $parserOutput
+     * @param \OutputPage   $out
+     * @param \ParserOutput $parserOutput
      */
     public function onOutputPageParserOutput( $out, $parserOutput ): void
     {
@@ -214,8 +216,8 @@ class Hooks implements
      * 
      * Add NSFWTag header and footer if nsfw/sfw tags were used
      * 
-     * @param OutputPage $out
-     * @param Skin       $skin
+     * @param \OutputPage $out
+     * @param \Skin       $skin
      */
     public function onBeforePageDisplay( $out, $skin ): void
     {

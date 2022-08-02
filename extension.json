@@ -8,7 +8,8 @@
 	"type": "parserhook",
 
 	"AutoloadClasses": {
-		"MediaWiki\\Extension\\NSFWTag\\Hooks": "src/NSFWTagHooks.php"
+		"MediaWiki\\Extension\\NSFWTag\\Hooks": "src/NSFWTagHooks.php",
+		"MediaWiki\\Extension\\NSFWTag\\Util": "src/NSFWTagUtil.php"
 	},
 	"ExtensionMessagesFiles": {
 		"NSFWTagMagic": "NSFWTag.i18n.php"
