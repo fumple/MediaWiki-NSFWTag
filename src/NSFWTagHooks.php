@@ -13,7 +13,6 @@ use MediaWiki\User\UserOptionsManager;
 use \EditPage;
 use \Parser;
 use \PPFrame;
-use \RequestContext;
 use \User;
 
 class Hooks implements
@@ -59,44 +58,6 @@ class Hooks implements
         'label-message' => 'nsfwtag-prefeditor',
         'section' => 'editing/editor',
         ];
-    }
-
-    /**
-     * Get NSFW preference and save it in the Parser
-     * 
-     * @param  Parser $parser
-     * @return boolean
-     */
-    private function getNSFWPreference( Parser $parser )
-    {
-        // Check whether the extnsfwtag option was already set
-        $parserOption = $parser->getOptions()->getOption('extnsfwtag');
-
-        // If not set
-        if ($parserOption == '') {
-            // Couldn't find a way to get a context from the arguments provided
-            $request = RequestContext::getMain()->getRequest();
-            $user = Util::getUserFromParser($parser);
-
-            // Check whether the user enabled the checkbox in the editor
-            $NSFWTogglePreference = $this->_userOptionsManager->getBoolOption($user, 'nsfwtag-prefeditor');
-
-            // load NSFW preference and save as 1/0
-            if ($parser->getOptions()->getIsPreview() && $NSFWTogglePreference) {
-                $preference = $request->getCheck('shownsfwcheckbox');
-            } else if ($request->getCheck('shownsfw')) {
-                $preference = $request->getBool('shownsfw');
-            } else {
-                $preference = $this->_userOptionsManager->getBoolOption($user, 'nsfwtag-pref');
-            }
-
-            $parser->getOptions()->setOption('extnsfwtag', $preference ? '1' : '0');
-            $parser->getOutput()->setExtensionData('extnsfwtag', $preference ? '1' : '0');
-            return $preference;
-        } else {
-            // convert 1/0 to true-false
-            return $parserOption == '1';
-        }
     }
 
 
@@ -146,7 +107,7 @@ class Hooks implements
      */
     public function renderTag( $isNSFWTag, $input, array $args, Parser $parser, PPFrame $frame )
     {
-        $preference = $this->getNSFWPreference($parser);
+        $preference = Util::getNSFWPreference($this->_userOptionsManager, $parser);
 
         // Check if NSFW is enabled, and compare it to $isNSFWTag
         if ($preference == $isNSFWTag) {
@@ -170,7 +131,7 @@ class Hooks implements
      */
     public function renderFunction( Parser $parser, $nsfwText = '', $sfwText = '' )
     {
-        $preference = $this->getNSFWPreference($parser);
+        $preference = Util::getNSFWPreference($this->_userOptionsManager, $parser);
 
         // Return the input provided, but wrap it in a <span> with a class to allow the wiki to style the content
         $class = $preference ? 'nsfwtag' : 'sfwtag';
