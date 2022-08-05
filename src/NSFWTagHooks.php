@@ -12,6 +12,7 @@ namespace MediaWiki\Extension\NSFWTag;
 use MediaWiki\User\UserOptionsManager;
 use \EditPage;
 use \Parser;
+use \ParserOptions;
 use \PPFrame;
 use \User;
 
@@ -150,8 +151,11 @@ class Hooks implements
     public function onParserOptionsRegister( &$defaults, &$inCacheKey, &$lazyLoad )
     {
         // register parser option
-        $defaults['extnsfwtag'] = '';
+        $defaults['extnsfwtag'] = null;
         $inCacheKey['extnsfwtag'] = true;
+        $lazyLoad['extnsfwtag'] = function (ParserOptions $options) {
+            return Util::lazyLoadNSFWPreference($this->_userOptionsManager, $options);
+        };
     }
 
     /**
