@@ -1,0 +1,17 @@
+{
+    "@metadata": {
+        "authors": [
+            "A22#5617"
+        ]
+    },
+    "nsfwtag-desc": "Esta extensión añade los tags `<nsfw>` y `<sfw>` junto con {{#nsfw}}, junto con una opción de usuario para alternar entre los dos",
+
+    "nsfwtag-pref": "Mostrar contenido no apropiado",
+    "nsfwtag-prefeditor": "Mostrar el panel de contenido no apropiado al editar una página",
+
+    "nsfwtag-header": "",
+    "nsfwtag-footer": "",
+
+    "nsfwtag-shownsfw-label": "Mostrar etiquetas de contenido no apropiado en la vista previa",
+    "nsfwtag-shownsfw-title": "Mostrar etiquetas de contenido no apropiado en la vista previa"
+}
