@@ -2,6 +2,7 @@
 namespace MediaWiki\Extension\NSFWTag;
 
 use MediaWiki\User\UserOptionsManager;
+use \ContextSource;
 use \RequestContext;
 use \Parser;
 use \ParserOptions;
@@ -13,6 +14,15 @@ class Util {
             return $parserOptions->getUserIdentity();
         } else {
             return $parserOptions->getUser();
+        }
+    }
+
+    public static function getActionName(ContextSource $context) {
+        if(method_exists($context, 'getActionName')) {
+            // @phan-suppress-next-line PhanUndeclaredMethod Checking the method in the function above
+            return $context->getActionName();
+        } else {
+            return $context->getRequest()->getText('action');
         }
     }
 

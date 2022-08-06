@@ -3,7 +3,7 @@
 	"author": "Fumple",
 	"url": "https://github.com/fumple/MediaWiki-NSFWTag",
 	"descriptionmsg": "nsfwtag-desc",
-	"version": "1.3.4",
+	"version": "1.3.5",
 	"license-name": "GPL-3.0-only",
 	"type": "parserhook",
 
@@ -34,6 +34,15 @@
 		"NSFWTag": [
 			"i18n"
 		]
+	},
+	"ResourceModules" : {
+		"ext.nsfwtag.previewfix": {
+			"localBasePath": "modules/ext.nsfwtag.previewfix",
+			"remoteExtPath": "NSFWTag/modules/ext.nsfwtag.previewfix",
+			"scripts": [
+				"index.js"
+			]
+		}
 	},
 
 	"manifest_version": 2

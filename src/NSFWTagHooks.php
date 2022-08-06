@@ -191,6 +191,16 @@ class Hooks implements
             $out->prependHtml(wfMessage('nsfwtag-header')->parseAsBlock());
             $out->addWikiMsg('nsfwtag-footer');
         }
+
+        // if both editor checkbox and preview without reload are enabled, add fix module
+        $user = $out->getUser();
+        if(
+            Util::getActionName($out) == "edit" && 
+            $this->_userOptionsManager->getBoolOption($user, 'nsfwtag-prefeditor') &&
+            $this->_userOptionsManager->getBoolOption($user, 'uselivepreview')
+        ) {
+            $out->addModules('ext.nsfwtag.previewfix');
+        }
     }
 
     /**
