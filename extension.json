@@ -3,7 +3,7 @@
 	"author": "Fumple",
 	"url": "https://github.com/fumple/MediaWiki-NSFWTag",
 	"descriptionmsg": "nsfwtag-desc",
-	"version": "1.3.5",
+	"version": "1.3.6",
 	"license-name": "GPL-3.0-only",
 	"type": "parserhook",
 
