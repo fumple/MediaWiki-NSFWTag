@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Fxfxfx0"
+		]
+	},
+    "nsfwtag-desc": "Cette extension ajoute une balise `<nsfw>` et `<sfw>` ainsi que la fonction {{#nsfw}}, avec une préférence utilisateur pour basculer d'un mode à l'autre",
+
+    "nsfwtag-pref": "Montrer le contenu NSFW",
+    "nsfwtag-prefeditor": "Montrer le bouton pour basculer entre le mode SFW et le mode NSFW lors de la modification d'une page",
+
+    "nsfwtag-header": "",
+    "nsfwtag-footer": "",
+
+    "nsfwtag-shownsfw-label": "Montrer les balises NSFW lors de la prévisualisation",
+    "nsfwtag-shownsfw-title": "Montrer les balises NSFW lors de la prévisualisation"
+}
